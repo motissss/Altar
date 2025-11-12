@@ -43,8 +43,7 @@ for i, cls in enumerate(classes):
 
 running = True
 while running:
-    dt = clock.tick(60) / 1000  # seconds since last frame
-
+    dt = clock.tick(60) / 1000
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
             running = False
@@ -53,10 +52,10 @@ while running:
     player.handle_input(keys, dt)
     player.update_animation(dt)
 
-    # Update gnome to face player
+    # Update to face player
     gnome.update(player)
 
-    # Check proximity
+    # Check distance
     distance = abs(player.x - gnome.x)
 
     # Show dialogue if player presses E while close
@@ -72,17 +71,17 @@ while running:
     player.draw(screen)
     gnome.draw(screen)
 
-    # Draw prompt if close and dialogue not yet shown
+    #if close and dialogue not yet shown
     if distance <= 100 and not show_dialogue:
         prompt_surface = font.render("Press E to talk", True, (255, 255, 255))
         screen.blit(prompt_surface, (gnome.rect.centerx - prompt_surface.get_width() // 2, gnome.rect.top - 40))
 
-    # Draw dialogue and buttons if shown
+    #dialogue and buttons if shown
     if show_dialogue:
         dialogue_surface = dialog_font.render(dialogue_text, True, (255, 255, 255))
         screen.blit(dialogue_surface, (gnome.rect.centerx - dialogue_surface.get_width() // 2, gnome.rect.top - 80))
 
-        # Draw buttons
+        #buttons
         for rect, cls in buttons:
             pygame.draw.rect(screen, (50, 50, 200), rect)        # Button background
             pygame.draw.rect(screen, (255, 255, 255), rect, 2)   # Border
@@ -92,7 +91,7 @@ while running:
                 rect.centery - text_surf.get_height() // 2
             ))
 
-        # Detect clicks
+        #clicks
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 running = False
@@ -101,7 +100,7 @@ while running:
                     mouse_pos = pygame.mouse.get_pos()
                     for rect, cls in buttons:
                         if rect.collidepoint(mouse_pos):
-                            print(f"You selected {cls}!")  # Trigger once per click
+                            print(f"You selected {cls}!")  # Trigger once
 
     pygame.display.flip()
 
