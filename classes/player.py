@@ -2,7 +2,7 @@ import pygame
 from settings import *
 
 class Player:
-    def __init__(self, x=400, y=601):
+    def __init__(self, x=300, y=602):
         self.x = x
         self.y = y
 
@@ -39,7 +39,7 @@ class Player:
         self.facing_right = True   # New: track facing direction
 
         self.image = self.frames_stand[self.current_frame]
-        self.rect = self.image.get_rect(center=(self.x, self.y))
+        self.rect = self.image.get_rect(midbottom=(self.x, self.y))
 
         self.speed = PLAYER_SPEED
         self.class_name = "No Class"
@@ -55,8 +55,6 @@ class Player:
             moving = True
             self.facing_right = True
 
-        # Lock Y
-        self.y = 590
 
         # Screen bounds
         if self.rect.width // 2 > self.x:
@@ -64,7 +62,7 @@ class Player:
         if self.x > SCREEN_WIDTH - self.rect.width // 2:
             self.x = SCREEN_WIDTH - self.rect.width // 2
 
-        self.rect.center = (self.x, self.y)
+        self.rect.midbottom = (self.x, self.y)
 
         # Animation state
         new_state = "walk" if moving else "stand"
@@ -84,6 +82,10 @@ class Player:
             elif self.state == "walk":
                 self.current_frame = (self.current_frame + 1) % self.num_frames_walk
                 self.image = self.frames_walk[self.current_frame]
+
+            # **Šī rindiņa nodrošina, ka spēlētājs paliek uz zemes**
+            self.rect = self.image.get_rect(midbottom=(self.x, self.y))
+
 
 
 

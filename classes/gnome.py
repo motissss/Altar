@@ -8,7 +8,7 @@ class Gnome:
         # Load sprite (default facing left)
         self.image = pygame.image.load("assets/gnome.png").convert_alpha()
         self.image = pygame.transform.scale(self.image, (128, 128))
-        self.rect = self.image.get_rect(center=(self.x, self.y))
+        self.rect = self.image.get_rect(midbottom=(self.x, self.y))
 
         self.facing_right = False  # Will update based on player
 
